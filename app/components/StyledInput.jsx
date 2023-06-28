@@ -22,7 +22,7 @@ const theme = {
   }
 }
 
-const StyledInput = ({ placeholder = "Placeholder", label = "label", error = false }) => {
+const StyledInput = ({ placeholder = "Placeholder", label = "label", error = false, disabled = false }) => {
 
   const [isfocused, setIsfocused] = useState(false);
 
@@ -36,11 +36,12 @@ const StyledInput = ({ placeholder = "Placeholder", label = "label", error = fal
 
   const styleGeneral = "outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] pl-[0.75em]"
 
-  const styleColor = error ? theme.colors.error : theme.colors.default;
+  const styleColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
 
-  const styleLabel = error ?
+  const styleLabel = disabled ? "text-[#333333]" : error ?
     (isfocused ? theme.label.error.focus : theme.label.error.normal)
     : (isfocused ? theme.label.default.focus : theme.label.default.normal)
+  
 
   return (
     <label className={`flex flex-col ${styleLabel} `}>{label}
@@ -50,6 +51,7 @@ const StyledInput = ({ placeholder = "Placeholder", label = "label", error = fal
         className={`${styleGeneral} ${styleColor}`}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        disabled={disabled}
       ></input>
     </label>
   );
