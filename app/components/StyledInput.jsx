@@ -14,7 +14,7 @@ const theme = {
     }
   },
   colors: {
-    default: "border-[#828282] hover:border-[#333333] !focus:border-[#2962FF]",
+    default: "border-[#828282] hover:border-[#333333] focus:border-[#2962FF]",
     error: "border-[#D32F2F] hover:border-[#333333] focus:border-[#D32F2F]"
   },
   sizes: {
@@ -34,7 +34,7 @@ const StyledInput = ({ placeholder = "Placeholder", label = "label", error = fal
     setIsfocused(false)
   }
 
-  const styleGeneral = "text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] pl-[0.75em]"
+  const styleGeneral = "outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] pl-[0.75em]"
 
   const styleColor = error ? theme.colors.error : theme.colors.default;
 
@@ -43,7 +43,7 @@ const StyledInput = ({ placeholder = "Placeholder", label = "label", error = fal
     : (isfocused ? theme.label.default.focus : theme.label.default.normal)
 
   return (
-    <label className={`flex flex-col ${styleLabel}`}>{label}
+    <label className={`flex flex-col ${styleLabel} `}>{label}
       <input
         type='text'
         placeholder={placeholder}
