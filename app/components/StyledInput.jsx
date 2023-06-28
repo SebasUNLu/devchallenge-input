@@ -17,12 +17,22 @@ const theme = {
     default: "border-[#828282] hover:border-[#333333] focus:border-[#2962FF]",
     error: "border-[#D32F2F] hover:border-[#333333] focus:border-[#D32F2F]"
   },
+  helperText: {
+    default: "text-[#828282]",
+    error: "text-[#D32F2F]"
+  },
   sizes: {
 
   }
 }
 
-const StyledInput = ({ placeholder = "Placeholder", label = "label", error = false, disabled = false }) => {
+const StyledInput = ({
+  placeholder = "Placeholder",
+  label = "label",
+  error = false,
+  disabled = false,
+  helperText = ""
+}) => {
 
   const [isfocused, setIsfocused] = useState(false);
 
@@ -41,10 +51,11 @@ const StyledInput = ({ placeholder = "Placeholder", label = "label", error = fal
   const styleLabel = disabled ? "text-[#333333]" : error ?
     (isfocused ? theme.label.error.focus : theme.label.error.normal)
     : (isfocused ? theme.label.default.focus : theme.label.default.normal)
-  
+
+  const styleHelper = `mt-1 text-[10px] font-normal ${error ? theme.helperText.error : theme.helperText.default}`
 
   return (
-    <label className={`flex flex-col ${styleLabel} `}>{label}
+    <label className={`flex flex-col ${styleLabel}`}>{label}
       <input
         type='text'
         placeholder={placeholder}
@@ -53,6 +64,7 @@ const StyledInput = ({ placeholder = "Placeholder", label = "label", error = fal
         onBlur={handleBlur}
         disabled={disabled}
       ></input>
+      {helperText && <p className={styleHelper}>{helperText}</p>}
     </label>
   );
 };
