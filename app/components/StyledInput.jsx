@@ -35,6 +35,7 @@ const StyledInput = ({
   helperText = "",
   startIcon = "",
   endIcon = "",
+  fullWidth = false
 }) => {
 
   const [isfocused, setIsfocused] = useState(false);
@@ -47,18 +48,20 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleGeneral = `outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] pl-[0.75em] ${startIcon && "pl-11"}`
+  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] ${startIcon ? "pl-11" : "pl-[0.75em]"}`
 
   const styleColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
 
-  const styleLabel = disabled ? "text-[#333333]" : error ?
+  const styleLabel = `flex flex-col ${fullWidth && "w-full"}`;
+
+  const styleLabelColor = disabled ? "text-[#333333]" : error ?
     (isfocused ? theme.label.error.focus : theme.label.error.normal)
     : (isfocused ? theme.label.default.focus : theme.label.default.normal)
 
   const styleHelper = `mt-1 text-[10px] font-normal ${error ? theme.helperText.error : theme.helperText.default}`
 
   return (
-    <label className={`flex flex-col ${styleLabel}`}>{label}
+    <label className={`${styleLabel} ${styleLabelColor}`}>{label}
       <div className='relative'>
         {startIcon && <CustomIcon iconName={startIcon} />}
         <input
