@@ -47,7 +47,7 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleGeneral = "outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] pl-[0.75em]"
+  const styleGeneral = `outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] pl-[0.75em] ${startIcon && "pl-11"}`
 
   const styleColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
 

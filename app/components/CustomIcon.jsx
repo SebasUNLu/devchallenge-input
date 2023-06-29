@@ -3,11 +3,11 @@ import { AiFillPhone, AiFillLock, AiFillGithub, AiOutlineMail, AiOutlineTwitter 
 
 const CustomIcon = ({ iconName = undefined, end = false }) => {
   let iconChosen;
-  if (iconName === "phone") iconChosen = <AiFillPhone size={16} />
-  if (iconName === "lock") iconChosen = <AiFillLock width={16} height={16} />
-  if (iconName === "github") iconChosen = <AiFillGithub width={16} height={16} />
-  if (iconName === "mail") iconChosen = <AiOutlineMail width={16} height={16} />
-  if (iconName === "twitter") iconChosen = <AiOutlineTwitter width={16} height={16} />
+  if (iconName === "phone") iconChosen = <AiFillPhone size={16}  />
+  if (iconName === "lock") iconChosen = <AiFillLock size={16}  />
+  if (iconName === "github") iconChosen = <AiFillGithub size={16}  />
+  if (iconName === "mail") iconChosen = <AiOutlineMail size={16}  />
+  if (iconName === "twitter") iconChosen = <AiOutlineTwitter size={16}  />
 
   return <IconContainer end={end}>
     {iconChosen}
