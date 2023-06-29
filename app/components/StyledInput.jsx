@@ -23,7 +23,8 @@ const theme = {
     error: "text-[#D32F2F]"
   },
   sizes: {
-
+    sm: "py-[0.625em]",
+    md: "py-[1.125em]"
   }
 }
 
@@ -35,7 +36,8 @@ const StyledInput = ({
   helperText = "",
   startIcon = "",
   endIcon = "",
-  fullWidth = false
+  fullWidth = false,
+  size = "md"
 }) => {
 
   const [isfocused, setIsfocused] = useState(false);
@@ -48,7 +50,7 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm py-[1.125em] ${startIcon ? "pl-11" : "pl-[0.75em]"}`
+  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md} ${startIcon ? "pl-11" : "pl-[0.75em]"}`
 
   const styleColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
 
