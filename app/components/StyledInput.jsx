@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
+import CustomIcon from './CustomIcon';
 
 const theme = {
   label: {
@@ -31,7 +32,9 @@ const StyledInput = ({
   label = "label",
   error = false,
   disabled = false,
-  helperText = ""
+  helperText = "",
+  startIcon = "",
+  endIcon = "",
 }) => {
 
   const [isfocused, setIsfocused] = useState(false);
@@ -56,15 +59,20 @@ const StyledInput = ({
 
   return (
     <label className={`flex flex-col ${styleLabel}`}>{label}
-      <input
-        type='text'
-        placeholder={placeholder}
-        className={`${styleGeneral} ${styleColor}`}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        disabled={disabled}
-      ></input>
+      <div className='relative'>
+        {startIcon && <CustomIcon iconName={startIcon} />}
+        <input
+          type='text'
+          placeholder={placeholder}
+          className={`${styleGeneral} ${styleColor}`}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          disabled={disabled}
+        />
+        {endIcon && <CustomIcon iconName={endIcon} end />}
+      </div>
       {helperText && <p className={styleHelper}>{helperText}</p>}
+
     </label>
   );
 };
