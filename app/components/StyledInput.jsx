@@ -1,11 +1,7 @@
 "use client"
 
-import React, { useRef, useState } from 'react';
-import CustomIcon from './CustomIcon';
-
-const paletteColor = {
-
-}
+import React, { useState } from 'react';
+import CustomInputIcon from './CustomInputIcon';
 
 const theme = {
   label: {
@@ -56,7 +52,7 @@ const theme = {
 
 const StyledInput = ({
   placeholder = "Placeholder",
-  label = "label",
+  label = "Label",
   error = false,
   disabled = false,
   helperText = "",
@@ -65,12 +61,18 @@ const StyledInput = ({
   fullWidth = false,
   size = "md",
   multiline = false,
-  row = 2
+  row = 2,
+  value = ""
 }) => {
 
   if (row < 2) row = 2
 
   const [isfocused, setIsfocused] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value)
+  }
 
   const handleFocus = () => {
     setIsfocused(true)
@@ -106,6 +108,8 @@ const StyledInput = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         disabled={disabled}
+        onChange={handleChange}
+        value={inputValue}
       />
       : <input
         type='text'
@@ -114,14 +118,16 @@ const StyledInput = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         disabled={disabled}
+        onChange={handleChange}
+        value={inputValue}
       />
 
   return (
     <label className={`${theme.label.general} ${styleLabelColor} ${styleWidth}`}>{label}
       <div className='relative'>
-        {startIcon && <CustomIcon iconName={startIcon} multiline />}
+        {startIcon && <CustomInputIcon iconName={startIcon} multiline={multiline} />}
         {selectedChildren}
-        {endIcon && <CustomIcon iconName={endIcon} end multiline />}
+        {endIcon && <CustomInputIcon iconName={endIcon} end multiline={multiline} />}
       </div>
       {helperText && <p className={styleHelper}>{helperText}</p>}
     </label>
