@@ -97,7 +97,7 @@ const StyledInput = ({
 
   const styleHelper = `${theme.helperText.general} ${error ? theme.helperText.error : theme.helperText.normal}`
 
-  const styleWidth = fullWidth ? "w-full" : "w-[200px]"
+  const styleWidth = fullWidth ? "w-full" : "w-auto"
 
   const selectedChildren =
     multiline

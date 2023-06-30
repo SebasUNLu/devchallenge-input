@@ -23,9 +23,9 @@ const Footer = () => {
           aria-label="LinkedIn"
           target="_blank"
           rel="noopener noreferrer"
-          className='ml-8'
+          className='ml-8 text-red-500'
         >
-          <FontAwesomeIcon width={32} height={32} icon={faGithub} color='white' />
+          <FontAwesomeIcon width={32} height={32} icon={faGithub}  />
         </a>
       </div>
     </div>

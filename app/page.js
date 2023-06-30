@@ -49,7 +49,7 @@ export default function Home() {
         <StyledDiv>
           <StyledInput label="startIcon='phone'" startIcon="phone" />
           <StyledInput label="endIcon='lock'" endIcon="lock" />
-          <StyledInput label="startIcon='github' endIcon='mail'" startIcon="github" endIcon="mail" />
+          <StyledInput label="startIcon='github' endIcon='twitter'" startIcon="github" endIcon="twitter" />
         </StyledDiv>
         
         <StyledTitle
@@ -78,7 +78,7 @@ export default function Home() {
           title={"Multiline"}
         />
         <StyledDiv>
-          <StyledInput label="multiline row={4}" multiline row={4} />
+          <StyledInput label="multiline row={4}" multiline row={4} endIcon="mail" />
         </StyledDiv>
       </div>
       <Footer />
