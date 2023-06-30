@@ -27,7 +27,7 @@ const theme = {
     md: "py-[1.125em]"
   },
   multiline: {
-    general: "text-[#333333] hover:text-[#333333] border border-solid border-[#828282] hover:border-[#333333] focus:border-[#2962FF] rounded-lg font-sans font-medium text-sm px-[0.75em]",
+    general: "text-[#333333] outline-none hover:text-[#333333] border border-solid border-[#828282] hover:border-[#333333] focus:border-[#2962FF] rounded-lg font-sans font-medium text-sm px-[0.75em]",
     sm: "py-[0.625em]",
     md: "py-[1.125em]",
   }
@@ -64,7 +64,9 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md} ${startIcon ? "px-11" : "px-[0.75em]"}`
+  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md}`
+
+  const iconsPaddingStyle = `${startIcon ? "pl-11" : "pl-[0.75em]"} ${endIcon ? "pr-11" : "pr-[0.75em]"}`
 
   const styleGeneralColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
 
@@ -80,11 +82,20 @@ const StyledInput = ({
 
   if (multiline)
     return (
-      <textarea
-        placeholder={placeholder}
-        className={`resize-none h-[${row * 22}px] ${theme.multiline.general} ${styleWidth} ${size === 'sm' ? theme.multiline.sm : theme.multiline.md}`}
-        rows={row}
-      ></textarea>
+      <label className={`${styleLabel} ${styleLabelColor} ${styleWidth}`}>{label}
+        <div className='relative'>
+          {startIcon && <CustomIcon iconName={startIcon} multiline />}
+          <textarea
+            placeholder={placeholder}
+            className={`resize-none h-[${row * 22}px] ${theme.multiline.general} ${styleWidth} ${size === 'sm' ? theme.multiline.sm : theme.multiline.md} ${iconsPaddingStyle} ${styleGeneralColor}`}
+            rows={row}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            disabled={disabled}
+          ></textarea>
+          {endIcon && <CustomIcon iconName={endIcon} end multiline />}
+        </div>
+      </label>
     )
 
   return (
@@ -94,7 +105,7 @@ const StyledInput = ({
         <input
           type='text'
           placeholder={placeholder}
-          className={`${styleGeneral} ${styleGeneralColor}`}
+          className={`${styleGeneral} ${styleGeneralColor} ${iconsPaddingStyle}`}
           onFocus={handleFocus}
           onBlur={handleBlur}
           disabled={disabled}
