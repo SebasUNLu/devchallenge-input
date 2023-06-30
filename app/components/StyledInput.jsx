@@ -3,6 +3,10 @@
 import React, { useRef, useState } from 'react';
 import CustomIcon from './CustomIcon';
 
+const paletteColor = {
+
+}
+
 const theme = {
   label: {
     default: {
@@ -13,6 +17,9 @@ const theme = {
       normal: "text-[#D32F2F] hover:text-[#333333]",
       focus: "text-[#D32F2F] hover:text-[#333333]"
     }
+  },
+  input: {
+
   },
   colors: {
     default: "border-[#828282] hover:border-[#333333] focus:border-[#2962FF]",
@@ -64,7 +71,7 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md}`
+  const styleInput = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md}`
 
   const iconsPaddingStyle = `${startIcon ? "pl-11" : "pl-[0.75em]"} ${endIcon ? "pr-11" : "pr-[0.75em]"}`
 
@@ -80,40 +87,33 @@ const StyledInput = ({
 
   const styleWidth = fullWidth ? "w-full" : "w-[200px]"
 
-  if (multiline)
-    return (
-      <label className={`${styleLabel} ${styleLabelColor} ${styleWidth}`}>{label}
-        <div className='relative'>
-          {startIcon && <CustomIcon iconName={startIcon} multiline />}
-          <textarea
-            placeholder={placeholder}
-            className={`resize-none h-[${row * 22}px] ${theme.multiline.general} ${styleWidth} ${size === 'sm' ? theme.multiline.sm : theme.multiline.md} ${iconsPaddingStyle} ${styleGeneralColor}`}
-            rows={row}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            disabled={disabled}
-          ></textarea>
-          {endIcon && <CustomIcon iconName={endIcon} end multiline />}
-        </div>
-      </label>
-    )
+  const selectedChildren =
+    multiline
+      ? <textarea
+        placeholder={placeholder}
+        className={`resize-none h-[${row * 22}px] ${theme.multiline.general} ${styleWidth} ${size === 'sm' ? theme.multiline.sm : theme.multiline.md} ${iconsPaddingStyle} ${styleGeneralColor}`}
+        rows={row}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        disabled={disabled}
+      />
+      : <input
+        type='text'
+        placeholder={placeholder}
+        className={`${styleInput} ${styleGeneralColor} ${iconsPaddingStyle}`}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        disabled={disabled}
+      />
 
   return (
     <label className={`${styleLabel} ${styleLabelColor} ${styleWidth}`}>{label}
       <div className='relative'>
-        {startIcon && <CustomIcon iconName={startIcon} />}
-        <input
-          type='text'
-          placeholder={placeholder}
-          className={`${styleGeneral} ${styleGeneralColor} ${iconsPaddingStyle}`}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          disabled={disabled}
-        />
-        {endIcon && <CustomIcon iconName={endIcon} end />}
+        {startIcon && <CustomIcon iconName={startIcon} multiline />}
+        {selectedChildren}
+        {endIcon && <CustomIcon iconName={endIcon} end multiline />}
       </div>
       {helperText && <p className={styleHelper}>{helperText}</p>}
-
     </label>
   );
 };
