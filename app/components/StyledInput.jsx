@@ -9,6 +9,7 @@ const paletteColor = {
 
 const theme = {
   label: {
+    general: "flex flex-col",
     default: {
       normal: "text-[#333333] hover:text-[#333333]",
       focus: "text-[#2962FF] hover:text-[#333333]"
@@ -19,14 +20,27 @@ const theme = {
     }
   },
   input: {
-
+    general: "w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm",
+    startIcon: {
+      on: "pl-11",
+      off: "pl-[0.75em]"
+    },
+    endIcon: {
+      on: "pr-11",
+      off: "pr-[0.75em]"
+    },
+  },
+  disabled: {
+    text: "text-[#333333]",
+    border: "border-[#E0E0E0]"
   },
   colors: {
     default: "border-[#828282] hover:border-[#333333] focus:border-[#2962FF]",
     error: "border-[#D32F2F] hover:border-[#333333] focus:border-[#D32F2F]"
   },
   helperText: {
-    default: "text-[#828282]",
+    general: "mt-1 text-[10px] font-normal",
+    normal: "text-[#828282]",
     error: "text-[#D32F2F]"
   },
   sizes: {
@@ -51,17 +65,12 @@ const StyledInput = ({
   fullWidth = false,
   size = "md",
   multiline = false,
-  row = 1
+  row = 2
 }) => {
 
-  if (row < 1) row = 1
+  if (row < 2) row = 2
 
   const [isfocused, setIsfocused] = useState(false);
-
-  const handleChange = (evt) => {
-    const val = evt.target?.value;
-    setValue(val);
-  };
 
   const handleFocus = () => {
     setIsfocused(true)
@@ -71,19 +80,20 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleInput = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md}`
+  const styleInput = `${theme.input.general} ${size === "sm" ? theme.sizes.sm : theme.sizes.md}`
 
-  const iconsPaddingStyle = `${startIcon ? "pl-11" : "pl-[0.75em]"} ${endIcon ? "pr-11" : "pr-[0.75em]"}`
+  const iconsPaddingStyle = `
+    ${startIcon ? theme.input.startIcon.on : theme.input.startIcon.off} 
+    ${endIcon ? theme.input.endIcon.on : theme.input.endIcon.off}
+  `
 
-  const styleGeneralColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
+  const styleGeneralColor = disabled ? theme.disabled.border : error ? theme.colors.error : theme.colors.default;
 
-  const styleLabel = `flex flex-col`;
-
-  const styleLabelColor = disabled ? "text-[#333333]" : error ?
+  const styleLabelColor = disabled ? theme.disabled.text : error ?
     (isfocused ? theme.label.error.focus : theme.label.error.normal)
     : (isfocused ? theme.label.default.focus : theme.label.default.normal)
 
-  const styleHelper = `mt-1 text-[10px] font-normal ${error ? theme.helperText.error : theme.helperText.default}`
+  const styleHelper = `${theme.helperText.general} ${error ? theme.helperText.error : theme.helperText.normal}`
 
   const styleWidth = fullWidth ? "w-full" : "w-[200px]"
 
@@ -107,7 +117,7 @@ const StyledInput = ({
       />
 
   return (
-    <label className={`${styleLabel} ${styleLabelColor} ${styleWidth}`}>{label}
+    <label className={`${theme.label.general} ${styleLabelColor} ${styleWidth}`}>{label}
       <div className='relative'>
         {startIcon && <CustomIcon iconName={startIcon} multiline />}
         {selectedChildren}
