@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import CustomIcon from './CustomIcon';
 
 const theme = {
@@ -25,6 +25,11 @@ const theme = {
   sizes: {
     sm: "py-[0.625em]",
     md: "py-[1.125em]"
+  },
+  multiline: {
+    general: "text-[#333333] hover:text-[#333333] border border-solid border-[#828282] hover:border-[#333333] focus:border-[#2962FF] rounded-lg font-sans font-medium text-sm px-[0.75em]",
+    sm: "py-[0.625em]",
+    md: "py-[1.125em]",
   }
 }
 
@@ -37,10 +42,19 @@ const StyledInput = ({
   startIcon = "",
   endIcon = "",
   fullWidth = false,
-  size = "md"
+  size = "md",
+  multiline = false,
+  row = 1
 }) => {
 
+  if (row < 1) row = 1
+
   const [isfocused, setIsfocused] = useState(false);
+
+  const handleChange = (evt) => {
+    const val = evt.target?.value;
+    setValue(val);
+  };
 
   const handleFocus = () => {
     setIsfocused(true)
@@ -50,11 +64,11 @@ const StyledInput = ({
     setIsfocused(false)
   }
 
-  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md} ${startIcon ? "pl-11" : "pl-[0.75em]"}`
+  const styleGeneral = `w-full outline-none text-[#333333] border border-solid rounded-lg font-sans font-medium text-sm ${size === "sm" ? theme.sizes.sm : theme.sizes.md} ${startIcon ? "px-11" : "px-[0.75em]"}`
 
-  const styleColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
+  const styleGeneralColor = disabled ? "border-[#E0E0E0]" : error ? theme.colors.error : theme.colors.default;
 
-  const styleLabel = `flex flex-col ${fullWidth && "w-full"}`;
+  const styleLabel = `flex flex-col`;
 
   const styleLabelColor = disabled ? "text-[#333333]" : error ?
     (isfocused ? theme.label.error.focus : theme.label.error.normal)
@@ -62,14 +76,25 @@ const StyledInput = ({
 
   const styleHelper = `mt-1 text-[10px] font-normal ${error ? theme.helperText.error : theme.helperText.default}`
 
+  const styleWidth = fullWidth ? "w-full" : "w-[200px]"
+
+  if (multiline)
+    return (
+      <textarea
+        placeholder={placeholder}
+        className={`resize-none h-[${row * 22}px] ${theme.multiline.general} ${styleWidth} ${size === 'sm' ? theme.multiline.sm : theme.multiline.md}`}
+        rows={row}
+      ></textarea>
+    )
+
   return (
-    <label className={`${styleLabel} ${styleLabelColor}`}>{label}
+    <label className={`${styleLabel} ${styleLabelColor} ${styleWidth}`}>{label}
       <div className='relative'>
         {startIcon && <CustomIcon iconName={startIcon} />}
         <input
           type='text'
           placeholder={placeholder}
-          className={`${styleGeneral} ${styleColor}`}
+          className={`${styleGeneral} ${styleGeneralColor}`}
           onFocus={handleFocus}
           onBlur={handleBlur}
           disabled={disabled}
